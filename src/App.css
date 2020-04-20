@@ -15,7 +15,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +35,42 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.map-box {
+  height: 100%;
+}
+
+.input-box {
+  width: 60vh;
+}
+
+.button {
+  width: 30%;
+  height: 25px;
+  margin: 0 220px 0 220px;
+}
+
+.datepicker {
+}
+
+.result-box {
+  width: 60%;
+  margin: 40px auto;
+}
+
+.result-box p {
+  margin: 10px;
 }
