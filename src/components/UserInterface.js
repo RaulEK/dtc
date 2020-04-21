@@ -1,12 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import MapContainer from './MapContainer';
+
+// Kasutan kuupäeva valimise elemendiks paketti: https://reactdatepicker.com/
 import DatePicker, {registerLocale, setDefaultLocale} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import et from 'date-fns/locale/et';
+
+import MapContainer from './MapContainer';
+import Result from "./Result";
 import '../App.css';
 import calculatorService from '../services/calculator';
-import Result from "./Result";
 
+// Et DatePicker oleks eesti keeles on vaja muuta date-fns locale eesti peale.
+// https://date-fns.org/
+import et from 'date-fns/locale/et';
 registerLocale('et', et);
 setDefaultLocale('et');
 
@@ -86,7 +91,7 @@ const UserInterface = () => {
                 </div>
 
             </div>
-            {data ? <Result data={data} /> : "Andmed puuduvad"}
+            {data ? <Result data={data} /> : "Asukoht ei sobi!"}
         </>
 
     )

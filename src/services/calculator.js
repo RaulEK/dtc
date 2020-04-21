@@ -1,16 +1,20 @@
+/*
+Arvutab päikesetõusu ja päikeseloojangu kellaajad. Nende abil päeva pikkuse.
+Tagastab tulemustest järjendi, milles iga objekt on üks kuupäev.
+Objekti väljad on: date, sunrise, sunset, time.
+Arvutuste jaoks kasutan teeki: https://github.com/mourner/suncalc
+*/
 import suncalc from 'suncalc';
 
 const calculate = (date, latitude, longitude) => {
+    // Äärmuslike koordinaatide puhul viskab suncalc errori.
+    // Sellisel juhul tagastan 'null' ehk kasutaja valitud asukoht ei ole sobilik.
     try {
         const data = suncalc.getTimes(date, latitude, longitude);
-        const sunrise = new Date(data.sunrise.toISOString());
-        const sunset = new Date(data.sunset.toISOString());
-        // const time = new Date(sunset - sunrise).toISOString().slice(11, -5);
-        const time2 = new Date(sunset - sunrise).getTime();
-        // console.log(new Date(time2).toISOString().slice(11, -5));
-        // const values = time.split(':');
-        // return (parseInt(values[0]) * 60 + parseInt(values[1])) * 60 + parseInt(values[2])
-        return time2;
+        const sunrise = new Date(data.sunrise.toUTCString());
+        const sunset = new Date(data.sunset.toUTCString());
+        const time = new Date(sunset - sunrise).getTime();
+        return [sunrise.getTime(), sunset.getTime(), time];
     } catch (e) {
         return null;
     }
@@ -27,7 +31,9 @@ const calculateMultipleDays = (firstDate, secondDate, latitude, longitude) => {
             return null;
         }
         const day = {date: startDate.getDate() + '/' + (startDate.getMonth() + 1) + '/' + startDate.getFullYear(),
-            time: time};
+            sunrise: time[0],
+            sunset: time[1],
+            time: time[2]};
         result.push(day);
         startDate.setDate(startDate.getDate() + 1)
     }

@@ -1,12 +1,16 @@
 import React from 'react';
 import '../App.css'
+
+// Graafiku joonistamiseks kasutasin: https://recharts.org/en-US/
+// Kood on nende näidete põhjal
 import {AreaChart, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip, Area} from 'recharts';
 
 
 const Result = ({data}) => {
 
+    // Aja teisendamise kood võetud siit: https://stackoverflow.com/questions/9763441/milliseconds-to-time-in-javascript
     const tickFormatter = (ms) => {
-        return new Date(ms).toISOString().slice(11, -5);
+        return new Date(ms).toUTCString().slice(17, -7);
     };
 
     let highest = data[0].time;
@@ -29,10 +33,14 @@ const Result = ({data}) => {
         return null;
     };
 
+    // Aja kujutamiseks y-teljel aitas: https://github.com/recharts/recharts/issues/956
     return (
         <div className='result-box'>
             <p>Alguskuupäeval <strong>{data[0].date}</strong> on päeva
-                pikkus <strong>{tickFormatter(data[0].time)}</strong></p>
+                pikkus <strong>{tickFormatter(data[0].time).split(':')[0]} tundi ja {tickFormatter(data[0].time).split(':')[1]} minutit</strong></p>
+            <p> Päikesetõus: <strong>{tickFormatter(data[0].sunrise)} UTC</strong>
+                , päikeseloojang: <strong>{tickFormatter(data[0].sunset)} UTC</strong>
+            </p>
             <ResponsiveContainer width='100%' height={400}>
                 <AreaChart data={data}>
                     <CartesianGrid strokeDasharray="3 3"/>
